@@ -183,12 +183,21 @@ int main(int argc, char *argv[])
 		columns = num_scopes;
 	}
 
+    /* Get screen resolution */
+    const SDL_VideoInfo* myPointer = SDL_GetVideoInfo();
+    // printf ("Current video resolution is %i x %i pixels", myPointer->current_w, myPointer->current_h);
+    
 	/* Calculate window size */
 	win.x = 0;
 	win.y = 0;
 	win.w = meter->w * columns;
 	win.h = meter->h * (((num_scopes - 1) / columns) + 1);
-
+    
+    if (win.w > myPointer->current_w || win.h > myPointer->current_h)
+    {
+        printf("WARNING: Window for meters is bigger than your screen, this may cause a segmantation fault! \nMaybe you can limit the colums by -c num_colums \n");
+    }
+    
 	screen = SDL_SetVideoMode(win.w, win.h, 32, SDL_SWSURFACE);
 	if ( screen == NULL ) {
 		fprintf(stderr, "Unable to set %dx%d video: %s\n", win.w, win.h, SDL_GetError());
@@ -281,8 +290,11 @@ int main(int argc, char *argv[])
 	}
 
 	/* Create and connect the jack ports */
-	for (i = 0; i < argc-port_base; i++) {
-		make_channel(client, i, argv[port_base+i]);
+	for (i = 0; i < num_meters; i++) {
+        if (i < (argc-port_base))
+            make_channel(client, i, argv[port_base+i]);
+        else
+            make_channel(client, i, "default");
 	}
 
 	while (SDL_WaitEvent(&event)) {
