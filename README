@@ -1,0 +1,22 @@
+This is the Mac OSX > 10.6 build of JACK Meterbridge 0.9.2 by Steve Harris
+http://plugin.org.uk/meterbridge/
+
+
+Build and package by Matthias Kronlachner, April 2013
+http://www.matthiaskronlachner.com
+
+
+IMPORTANT:
+Needs Jack from http://www.jackosx.com
+
+Needs libsdl and libsdl_image from MacPorts!!
+http://www.macports.org
+
+Terminal:
+sudo port install libsdl libsdl_image
+
+
+After installation eg. 12 channel meter in 2 rows:
+Start from Terminal:
+
+meterbridge -n my_meters -c 6 -t dpm 1 2 3 4 5 6 7 8 9 10 x x
