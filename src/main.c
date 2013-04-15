@@ -62,10 +62,12 @@ int main(int argc, char *argv[])
 	int x = 0, y = 0;
 	char window_name[256];
 	char *us_client_name = NULL;
-
+    
+    int num_specified = 0;
+    
 	num_meters = argc;
     
-	while ((opt = getopt(argc, argv, "t:r:c:n:h")) != -1) {
+	while ((opt = getopt(argc, argv, "m:t:r:c:n:h")) != -1) {
 		switch (opt) {
 			case 'r':
 				ref_lev = atof(optarg);
@@ -103,12 +105,22 @@ int main(int argc, char *argv[])
 				/* Force help to be shown */
 				num_meters = 0;
 				break;
+            case 'm':
+                /* added by Matthias Kronlachner - specify number of meters*/
+                num_meters = atoi(optarg);
+                num_specified = 1;
+                printf("Creating %i meters... \n", num_meters);
+                port_base += 2;
+                break;
 			default:
-				//num_meters = 0;
+				num_meters = 0;
 				break;
 		}
 	}
-	num_meters -= port_base;
+    if (!num_specified)
+    {
+        num_meters -= port_base;
+    }
 
 	if (num_meters > MAX_METERS) {
 		num_meters = MAX_METERS;
@@ -125,7 +137,7 @@ int main(int argc, char *argv[])
 
 	if (num_meters < 1) {
 		fprintf(stderr, "Meterbridge version %s - http://plugin.org.uk/meterbridge/\n\n", VERSION);
-		fprintf(stderr, "Usage %s: [-r ref-level] [-c columns] [-n jack-name] [-t type] <port>+\n\n", argv[0]);
+		fprintf(stderr, "Usage %s: [-r ref-level] [-c columns] [-n jack-name] [-t type] [-m num_meters] <jack_port1> <jack_port2>...\n\n", argv[0]);
 		fprintf(stderr, "where ref-level is the reference signal level for 0dB on the meter\n");
 		fprintf(stderr, "  and type is the meter type, one of:\n");
 		fprintf(stderr, "     'vu'  - classic moving needle VU meter\n");
@@ -135,6 +147,9 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "     'sco' - Oscilloscope meter\n");
 		exit(1);
 	}
+    
+    fflush(stdout);
+    
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		fprintf(stderr, "Unable to init SDL: %s\n", SDL_GetError());
 		exit(1);
@@ -266,7 +281,7 @@ int main(int argc, char *argv[])
 	}
 
 	/* Create and connect the jack ports */
-	for (i = 0; i < num_meters; i++) {
+	for (i = 0; i < argc-port_base; i++) {
 		make_channel(client, i, argv[port_base+i]);
 	}
 

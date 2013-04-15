@@ -4,7 +4,7 @@
 #include <SDL.h>
 #include <jack/jack.h>
 
-#define MAX_METERS 32
+#define MAX_METERS 64
 
 extern SDL_Surface *screen;
 extern SDL_Surface *image, *meter, *meter_buf;

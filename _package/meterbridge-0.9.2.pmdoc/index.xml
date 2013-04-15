@@ -1,4 +1,4 @@
-<pkmkdoc spec="1.12"><properties><title>meterbridge-0.9.2</title><build>/Users/matthias/meterbridge-0.9.2/_package/meterbridge-0.9.2.pkg</build><organization>com.kronlachner</organization><userSees ui="easy"/><min-target os="3"/><domain system="true"/></properties><distribution><versions min-spec="1.000000"/><scripts></scripts></distribution><description>This is the Mac OSX > 10.6 build of JACK Meterbridge by Steve Harris
+<pkmkdoc spec="1.12"><properties><title>meterbridge-0.9.2</title><build>/Users/matthias/meterbridge-0.9.2/_package/meterbridge-0.9.2-installer.pkg</build><organization>com.kronlachner</organization><userSees ui="easy"/><min-target os="3"/><domain system="true"/></properties><distribution><versions min-spec="1.000000"/><scripts></scripts></distribution><description>This is the Mac OSX > 10.6 build of JACK Meterbridge by Steve Harris
 
 http://plugin.org.uk/meterbridge/
 
