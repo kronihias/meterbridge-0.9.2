@@ -33,7 +33,9 @@ int iec_scale(float db) {
          } else if (db < -60.0f) {
                  def = (db + 70.0f) * 0.25f;
          } else if (db < -50.0f) {
-                 def = (db + 60.0f) * 0.5f + 5.0f;
+                //   def = (db + 60.0f) * 0.5f + 5.0f;  //  5.0  ..  10.0 // bug? v0.9.2
+                def = (db + 60.0f) * 0.5f + 2.5f;  //  2.5  ..   7.5 // fix! from Robin Gareus
+                //http://linux-audio.4202.n7.nabble.com/meterbridge-0-9-2-IEC-scale-bug-amp-fix-td64454.html
          } else if (db < -40.0f) {
                  def = (db + 50.0f) * 0.75f + 7.5;
          } else if (db < -30.0f) {
